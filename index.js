@@ -31,7 +31,7 @@ buttonCheck.addEventListener("click", () => {
     }
     if (!isNaN(valueInputted) && valueInputted >= 1 && valueInputted <= 20 && valueInputted != randomNumber){
         confetti({
-            particleCount: 100,
+            particleCount: 143,
             spread: 70,
             origin: { y: 0.6 }
         });
@@ -44,9 +44,10 @@ buttonCheck.addEventListener("click", () => {
         console.log('FAIL - You matched the number!', randomNumber);
         randomNumber = generateRandomNumber(); // Generate a new random number
         console.log("New random number to guess:", randomNumber);
+        return gameOverAnimation();
 
     } else {
-        inputElement.value = ""; // Clear the input field if the guess is wrong
+        inputElement.value = "";// Clear the input field if the guess is wrong
         let currentScore = Number(scoreElement.textContent); // Get the current score
         currentScore += 1; // Increment the current score
         scoreElement.textContent = currentScore; // Update the score display
@@ -64,6 +65,25 @@ buttonCheck.addEventListener("click", () => {
         console.log("New random number to guess:", randomNumber);
     }
 });
+
+function gameOverAnimation() {
+    const gameOverText = document.createElement('div');
+    gameOverText.innerText = "Game Over";
+    gameOverText.style.position = 'fixed';
+    gameOverText.style.top = '50%';
+    gameOverText.style.left = '50%';
+    gameOverText.style.transform = 'translate(-50%, -50%)';
+    gameOverText.style.fontSize = '200px';
+    gameOverText.style.color = 'red';
+    gameOverText.style.opacity = '0';  // Start with transparent text
+    gameOverText.style.transition = 'opacity 2s';  // Smooth fade-in transition
+    document.body.appendChild(gameOverText);
+
+    // Trigger the fade-in after appending
+    setTimeout(() => {
+        gameOverText.style.opacity = '1';  // Fade in the text
+    }, 100);
+}
 
 // Function to add text below the button when inputted value is 20
 function addSomeText() {
